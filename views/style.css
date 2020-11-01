@@ -1,0 +1,24 @@
+.custom-navitem {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.shrinkInputForm {
+	max-width: 500px;
+}
+
+.jumbotron {
+	margin: 30px;
+	padding: 30px;
+}
+#main-navbar {
+	padding: 20px;
+}
+
+#register-btn {
+	padding-left: 1400px;
+}
+
+#login-btn {
+
+}
