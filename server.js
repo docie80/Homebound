@@ -1,37 +1,40 @@
 const express = require ('express');
+const app = express();
 const exphbs = require('express-handlebars');
 const path = require("path");
-const data = require("./data.js");
 const bodyParser = require('body-parser');
-const app = express();
+const data = require("./data.js");
 const registerCtrl = require('./contollers/registration');
 const loginCtrl = require('./contollers/login');
-const dataEntryCtrl = require('./contollers/dataEntry')
-const mealCtrl = require('./contollers/meal')
+const admin = require('./contollers/admin');
 
-app.use((req, res, next) => {
-    console.log(req);
-    next();
-});
+app.engine('.hbs', exphbs({
+    extname: '.hbs',
+    helpers: {
+        navLink: function (url, options) {
+            return '<li' +
+                ((url == app.locals.activeRoute) ? ' class="active" ' : '') +
+                '><a href="' + url + '">' + options.fn(this) + '</a></li>';
+        }
+    }
+}));
+
+app.set('view engine', '.hbs');
 
 app.get('/', (req, res, next) => {
-    res.send('Welcome to Homebound!')
-    res.render("home.hbs");
+    res.render('home.hbs');
 });
 
-app.get('/rooms', (req, res, next) => {
-    res.send('Welcome to the room listing!')
+app.get('/login', (req, res, next) => {
+    res.render('login.hbs');
 });
 
 app.get('/register', (req, res, next) => {
-    res.send('Welcome to the user registration!')
+    res.render('register.hbs');
 });
 
-app.use('/meals', mealCtrl)
-
-app.use("/login", loginCtrl)
+app.use("/login", loginCtrl);
 
 app.use("/register", registerCtrl);
-
 
 app.listen(8080);
